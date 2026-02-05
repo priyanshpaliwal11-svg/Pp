@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Purbasha | Feb 10</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            --pink-soft: #ffcad4;
+            --pink-deep: #f7aef8;
+            --text-dark: #4a4e69;
+            --glass: rgba(255, 255, 255, 0.88);
+            --gold: #d4af37;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            color: var(--text-dark);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .floating-elements { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+        .nav-dots {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--pink-deep); cursor: pointer; transition: 0.3s; }
+        .dot.active { background: var(--pink-deep); transform: scale(1.3); }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            visibility: hidden;
+            opacity: 0;
+            z-index: 1;
+        }
+        .page.active { visibility: visible; opacity: 1; z-index: 2; }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            padding: 2.5rem 2rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.4);
+            position: relative;
+        }
+
+        .photo-frame {
+            width: 100%;
+            height: 420px;
+            background: #fff;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: 10px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        .photo-frame:hover { transform: rotate(-1deg) scale(1.02); }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #b07d62; }
+        h2 { font-family: 'Dancing Script', cursive; font-size: 2.8rem; color: #ff758c; margin: 10px 0; }
+        p { line-height: 1.6; font-size: 1rem; color: #6d6875; font-weight: 300; }
+
+        .btn {
+            margin-top: 1.5rem;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            background: #ff758c;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.3);
+        }
+        .btn:hover { background: #ff4d6d; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 117, 140, 0.4); }
+
+        /* Gift Box */
+        .gift-container { cursor: pointer; position: relative; width: 160px; height: 160px; margin: 0 auto; }
+        .gift-box { width: 100px; height: 100px; background: #e67e22; position: absolute; bottom: 0; left: 30px; border-radius: 8px; }
+        .gift-lid { width: 110px; height: 35px; background: #d35400; position: absolute; top: 25px; left: 25px; z-index: 2; border-radius: 4px; box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
+        .gift-ribbon { width: 20px; height: 100px; background: #f1c40f; position: absolute; left: 70px; bottom: 0; }
+
+        /* Final Letter */
+        .letter {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 90%;
+            max-width: 500px;
+            background: #fffcf5;
+            padding: 50px 40px;
+            border-radius: 2px;
+            box-shadow: 0 0 100px rgba(0,0,0,0.4);
+            z-index: 1000;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #4e342e;
+            line-height: 1.8;
+            border: 1px solid #d7ccc8;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="floating-elements" id="hearts"></div>
+
+    <div class="nav-dots" id="navDots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
+    <div class="page active" id="p0">
+        <div class="card">
+            <h1>Hey Purbasha</h1>
+            <div class="photo-frame"><img src="IMG_6227.jpg"></div>
+            <p>I wanted to show you something special today...</p>
+            <button class="btn" onclick="goToPage(1)">Let's start</button>
+        </div>
+    </div>
+
+    <div class="page" id="p1">
+        <div class="card">
+            <h2>The Perfect Pair</h2>
+            <div class="photo-frame"><img src="IMG_6170.jpg"></div>
+            <p>Every journey is better when I'm standing next to you.</p>
+            <button class="btn" onclick="goToPage(2)">Continue</button>
+        </div>
+    </div>
+
+    <div class="page" id="p2">
+        <div class="card">
+            <h2>Our Vibe</h2>
+            <div class="photo-frame"><img src="IMG_3721.jpg"></div>
+            <p>No filters needed when the connection is this real.</p>
+            <button class="btn" onclick="goToPage(3)">Next</button>
+        </div>
+    </div>
+
+    <div class="page" id="p3">
+        <div class="card">
+            <h2>Radiant</h2>
+            <div class="photo-frame"><img src="IMG_4132.jpg"></div>
+            <p>That smile of yours is my favorite thing in the world.</p>
+            <button class="btn" onclick="goToPage(4)">One more...</button>
+        </div>
+    </div>
+
+    <div class="page" id="p4">
+        <div class="card">
+            <h1>Happy Birthday!</h1>
+            <h2>10th Feb 2026</h2>
+            <div class="photo-frame"><img src="IMG_4092.jpg"></div>
+            <p>To my beautiful Purbasha, may your day be as magical as you are.</p>
+            <button class="btn" onclick="goToPage(5)">I have a gift</button>
+        </div>
+    </div>
+
+    <div class="page" id="p5">
+        <div class="card">
+            <h2>A Note For You</h2>
+            <p style="margin-bottom: 2rem;">Tap the box to open your surprise...</p>
+            <div class="gift-container" onclick="openLetter()">
+                <div class="gift-lid" id="lid"></div>
+                <div class="gift-ribbon"></div>
+                <div class="gift-box" id="box"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="letter" id="letter">
+        <div id="letterText">
+            Dearest Purbasha,<br><br>
+            Happy Birthday to the girl who makes my world spin. Watching us grow through these photos makes me realize how much I cherish every moment we share. <br><br>
+            You are my greatest gift, not just today, but every single day. <br><br>
+            I love you endlessly!<br>
+            ❤️
+        </div>
+        <button class="btn" style="width:100%" onclick="closeLetter()">Close with Love</button>
+    </div>
+
+    <script>
+        let curr = 0;
+        const dots = document.querySelectorAll('.dot');
+
+        function goToPage(idx) {
+            gsap.to(`#p${curr}`, { opacity: 0, scale: 0.9, duration: 0.5, onComplete: () => {
+                document.getElementById(`p${curr}`).classList.remove('active');
+                document.getElementById(`p${idx}`).classList.add('active');
+                gsap.fromTo(`#p${idx}`, { opacity: 0, scale: 1.1 }, { opacity: 1, scale: 1, duration: 0.6 });
+                dots[curr].classList.remove('active');
+                dots[idx].classList.add('active');
+                curr = idx;
+                if(idx === 4) confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
+            }});
+        }
+
+        function openLetter() {
+            gsap.to("#lid", { y: -150, rotation: 20, opacity: 0, duration: 1 });
+            gsap.to(".gift-ribbon", { opacity: 0, duration: 0.5 });
+            gsap.to("#box", { scale: 0, opacity: 0, duration: 0.5, delay: 0.3 });
+            
+            setTimeout(() => {
+                gsap.to("#letter", { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.2)" });
+                confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 }, colors: ['#ff758c', '#ffd700'] });
+            }, 800);
+        }
+
+        function closeLetter() {
+            gsap.to("#letter", { scale: 0, opacity: 0, duration: 0.4 });
+        }
+
+        function createHeart() {
+            const h = document.createElement('div');
+            h.innerHTML = ['❤️','💖','✨','🌸'][Math.floor(Math.random()*4)];
+            h.style.cssText = `position:absolute; left:${Math.random()*100}vw; top:100vh; font-size:${Math.random()*20+15}px; z-index:0; user-select:none;`;
+            document.getElementById('hearts').appendChild(h);
+            gsap.to(h, { y: '-110vh', x: (Math.random()-0.5)*200, duration: Math.random()*4+3, opacity: 0, onComplete: () => h.remove() });
+        }
+        setInterval(createHeart, 450);
+    </script>
+</body>
+</html>
